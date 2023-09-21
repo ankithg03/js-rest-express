@@ -11,10 +11,11 @@ app.use(express.json())
  */
 app.post(`/signup`, async (req, res) => {
   const { name, email, posts } = req.body
+  console.log('aaa', req)
 
   const postData = posts
     ? posts.map((post) => {
-        return { title: post.title, content: post.content || undefined }
+        return { title: post.title, content: post.content || undefined, image: post.image || undefined }
       })
     : []
 
@@ -34,12 +35,13 @@ app.post(`/signup`, async (req, res) => {
  * /post rest API - To create a new post
  */
 app.post(`/post`, async (req, res) => {
-  const { title, content, authorEmail } = req.body
+  const { title, content, authorEmail, image } = req.body
   const result = await prisma.post.create({
     data: {
-      title,
+      title: title,
       content,
       author: { connect: { email: authorEmail } },
+      image
     },
   })
   res.json(result)
