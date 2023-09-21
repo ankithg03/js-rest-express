@@ -112,7 +112,13 @@ app.get('/users', async (req, res) => {
   res.json(users)
 })
 
-
+/**
+ * to get all the users signed up
+ */
+app.get('/posts', async (req, res) => {
+  const posts = await prisma.post.findMany()
+  res.json(posts)
+})
 /**
  * all draft posts by user
  */
